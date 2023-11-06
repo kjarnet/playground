@@ -28,8 +28,31 @@ function fetchApi(url: string): Promise<any> {
     })
 }
 
+function Card({
+  idx,
+  hand,
+  setHand,
+}: {
+  idx: number
+  hand: string[]
+  setHand: React.Dispatch<string[]>
+}) {
+  return (
+    <input
+      type="text"
+      maxLength={2}
+      size={2}
+      value={hand[idx]}
+      onChange={(e) => {
+        e.preventDefault()
+        setHand([...hand.slice(0, idx), e.target.value, ...hand.slice(idx + 1)])
+      }}
+    />
+  )
+}
+
 function App() {
-  const [hand, setHand] = useState([])
+  const [hand, setHand] = useState(['', '', '', '', ''])
   const [handClass, setHandClass] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -44,7 +67,8 @@ function App() {
             .then((x) => {
               console.log(x)
               setErrorMessage('')
-              setHand(x.data.hand)
+              const hand = x.data.hand
+              setHand(hand)
             })
             .catch((err) => {
               console.error('Err:', err)
@@ -54,7 +78,6 @@ function App() {
       >
         <button>Get random hand</button>
       </form>
-      {hand.join()}
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -69,6 +92,11 @@ function App() {
             })
         }}
       >
+        <Card idx={0} hand={hand} setHand={setHand} />
+        <Card idx={1} hand={hand} setHand={setHand} />
+        <Card idx={2} hand={hand} setHand={setHand} />
+        <Card idx={3} hand={hand} setHand={setHand} />
+        <Card idx={4} hand={hand} setHand={setHand} />
         <button>Analyze hand</button>
       </form>
       {handClass}
