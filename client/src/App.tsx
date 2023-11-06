@@ -1,57 +1,77 @@
 import React, { useState } from 'react'
 import './App.css'
 
+function fetchApi(url: string): Promise<any> {
+  return fetch(url)
+    .then((x) => {
+      console.log(x.statusText)
+      return x.json().then((data) => {
+        if (x.ok) {
+          return {
+            ok: true,
+            ...data,
+          }
+        } else {
+          return {
+            ok: false,
+            ...data,
+          }
+        }
+      })
+    })
+    .then((x) => {
+      console.log(x)
+      if (!x.ok) {
+        throw x
+      }
+      return x
+    })
+}
+
 function App() {
   const [hand, setHand] = useState([])
   const [handClass, setHandClass] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   return (
     <div className="App">
       <p>Welcome to the poker hand analyzer</p>
+      {errorMessage}
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          fetch('/api/hand')
-            .then(
-              (x) => {
-                console.log(x.statusText)
-                return x.json()
-              },
-              (err) => {
-                console.error('Error', err)
-              }
-            )
+          fetchApi('/api/hand')
             .then((x) => {
               console.log(x)
+              setErrorMessage('')
               setHand(x.data.hand)
+            })
+            .catch((err) => {
+              console.error('Err:', err)
+              setErrorMessage(err.errorMessage)
             })
         }}
       >
         <button>Get random hand</button>
-        {hand.join()}
       </form>
+      {hand.join()}
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          fetch('/api/analysis?hand=' + hand.join(''))
-            .then(
-              (x) => {
-                console.log(x.statusText)
-                return x.json()
-              },
-              (err) => {
-                console.error('Error', err)
-              }
-            )
+          fetchApi('/api/analysis?hand=' + hand.join(''))
             .then((x) => {
-              console.log(x)
+              setErrorMessage('')
               setHandClass(x.data.analysis)
+            })
+            .catch((err) => {
+              console.error('Err:', err)
+              setErrorMessage(err.errorMessage)
             })
         }}
       >
         <button>Analyze hand</button>
-        {handClass}
       </form>
+      {handClass}
     </div>
   )
 }
