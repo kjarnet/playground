@@ -20,8 +20,8 @@ interface Card {
     value: Value
 }
 
-function cardToString(card: Card) {
-    return card.suit.short + card.value.name
+function serializeCard(card: Card) {
+    return [card.suit.short, card.value.name]
 }
 
 function stringToCard(cardString: string): Card {
@@ -37,7 +37,7 @@ function stringToCard(cardString: string): Card {
     if (!value) {
         throw new Error(`Invalid value ${valueString}`)
     }
-    return { suit, value};
+    return {suit, value};
 }
 
 function stringToHand(handString: string): Card[] {
@@ -125,7 +125,7 @@ function isWheelStraight(sortedHandValues: number[]): boolean {
 }
 
 export {
-    cardToString,
+    serializeCard,
     stringToHand,
     generateRandomHand,
     analyzeHand

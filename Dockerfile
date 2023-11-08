@@ -1,3 +1,4 @@
+# https://github.com/GoogleContainerTools/distroless/blob/main/examples/nodejs/Dockerfile
 FROM node:20-bullseye-slim AS build
 COPY ./client /client
 COPY ./server /server
