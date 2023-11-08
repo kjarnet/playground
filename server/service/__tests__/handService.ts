@@ -1,13 +1,13 @@
 import {describe, expect, test} from '@jest/globals';
 
-import {analyzeHand, serializeCard, generateRandomHand, HandClass, stringToHand} from '../handService'
+import {analyzeHand, generateRandomHand, HandClass, serializeCard, stringToHand} from '../handService'
 import suits from '../../domain/suits'
 import values from '../../domain/values'
 
 describe('cardToString', () => {
     test('returns correct name', () => {
-        expect(serializeCard({suit: suits.diamonds, value: values['2']})).toBe('d2');
-        expect(serializeCard({suit: suits.clubs, value: values['a']})).toBe('ca');
+        expect(serializeCard({suit: suits.diamonds, value: values['2']})).toEqual(['d', '2']);
+        expect(serializeCard({suit: suits.clubs, value: values['a']})).toEqual(['c', 'a']);
     });
 });
 
