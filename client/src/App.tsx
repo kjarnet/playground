@@ -77,7 +77,9 @@ function Card({
         }}
       >
         {suits.map((s) => (
-          <option value={s.short}>{s.name}</option>
+          <option key={s.short} value={s.short}>
+            {s.name}
+          </option>
         ))}
       </select>
       <select
@@ -93,7 +95,9 @@ function Card({
         }}
       >
         {values.map((s) => (
-          <option value={s.short}>{s.name}</option>
+          <option key={s.short} value={s.short}>
+            {s.name}
+          </option>
         ))}
       </select>
     </>
