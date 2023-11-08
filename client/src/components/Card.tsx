@@ -34,10 +34,11 @@ function Card({
   setHand: React.Dispatch<string[][]>
 }) {
   return (
-    <>
+    <div>
       <select
         name="cardSuit"
         title="Card Suit"
+        className="border-2 border-black rounded-md p-2 mr-2"
         value={hand[idx][0]}
         onChange={(e) => {
           e.preventDefault()
@@ -58,6 +59,7 @@ function Card({
       <select
         name="cardValue"
         title="Card Value"
+        className="border-2 border-black rounded-md p-2"
         value={hand[idx][1]}
         onChange={(e) => {
           e.preventDefault()
@@ -75,7 +77,7 @@ function Card({
           </option>
         ))}
       </select>
-    </>
+    </div>
   )
 }
 
