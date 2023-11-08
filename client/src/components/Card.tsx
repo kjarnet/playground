@@ -36,7 +36,8 @@ function Card({
   return (
     <>
       <select
-        size={1}
+        name="cardSuit"
+        title="Card Suit"
         value={hand[idx][0]}
         onChange={(e) => {
           e.preventDefault()
@@ -55,7 +56,8 @@ function Card({
         ))}
       </select>
       <select
-        size={1}
+        name="cardValue"
+        title="Card Value"
         value={hand[idx][1]}
         onChange={(e) => {
           e.preventDefault()
